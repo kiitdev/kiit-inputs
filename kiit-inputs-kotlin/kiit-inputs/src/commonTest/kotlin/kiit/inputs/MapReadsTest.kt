@@ -15,24 +15,24 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 class MapReadsTest {
-
     private val uuid = Uuid.random()
-    private val reads = MapReads(
-        mapOf(
-            "str" to "hello",
-            "bool" to "true",
-            "short" to "7",
-            "int" to "42",
-            "long" to "9999999999",
-            "float" to "1.5",
-            "double" to "2.25",
-            "instant" to "2024-03-05T10:15:30Z",
-            "date" to "2024-03-05",
-            "time" to "10:15:30",
-            "datetime" to "2024-03-05T10:15:30",
-            "uuid" to uuid.toString(),
+    private val reads =
+        MapReads(
+            mapOf(
+                "str" to "hello",
+                "bool" to "true",
+                "short" to "7",
+                "int" to "42",
+                "long" to "9999999999",
+                "float" to "1.5",
+                "double" to "2.25",
+                "instant" to "2024-03-05T10:15:30Z",
+                "date" to "2024-03-05",
+                "time" to "10:15:30",
+                "datetime" to "2024-03-05T10:15:30",
+                "uuid" to uuid.toString(),
+            ),
         )
-    )
 
     @Test
     fun readsTypedValues() {

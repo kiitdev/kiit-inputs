@@ -1,15 +1,14 @@
 package kiit.inputs
 
 /**
- * An ordered, immutable collection giving O(1) lookup both by key and by position — the
- * combination `Record`/`RecordMap` need (a DB row is addressable by column name or index)
- * that neither a plain `List<Pair<A,B>>` (no fast key lookup) nor a `LinkedHashMap`
- * (no positional index, no duplicate-key tolerance) provides on its own.
+ * An ordered, immutable collection giving O(1) lookup both by key and by position. This is
+ * the combination `Record`/`RecordMap` need, since a DB row is addressable by column name or
+ * index, and neither a plain `List<Pair<A,B>>` (no fast key lookup) nor a `LinkedHashMap`
+ * (no positional index, no duplicate-key tolerance) provides it alone.
  */
 open class ListMap<A, B>(protected val list: List<Pair<A, B>> = listOf()) {
-
-    // Index of each key's (last) position in `list` — duplicate keys are tolerated in `list`
-    // itself, but key-based lookup resolves to the last occurrence, mirroring how a Map would.
+    // Index of each key's last position in `list`. Duplicate keys are tolerated in `list`
+    // itself, but key-based lookup resolves to the last occurrence, same as a Map would.
     protected val map = convert(list)
 
     val size: Int = list.size
@@ -70,7 +69,6 @@ open class ListMap<A, B>(protected val list: List<Pair<A, B>> = listOf()) {
     fun toMap(): Map<String, Any> = map.map { entry -> entry.key.toString() to list[entry.value].second as Any }.toMap()
 
     companion object {
-
         fun <A, B> convert(items: List<Pair<A, B>>): Map<A, Int> {
             val map = mutableMapOf<A, Int>()
             items.forEachIndexed { index, pair -> map[pair.first] = index }

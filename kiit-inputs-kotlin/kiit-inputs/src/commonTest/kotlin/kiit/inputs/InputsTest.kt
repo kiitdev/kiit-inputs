@@ -7,7 +7,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class InputsTest {
-
     @Test
     fun getOrNullChecksContainsKeyFirst() {
         val inputs = FakeInputs(mapOf("name" to "kiit", "count" to 3))
@@ -35,7 +34,6 @@ class InputsTest {
 }
 
 class InputsUpdateableTest {
-
     @Test
     fun addReturnsNewInstanceWithoutMutatingOriginal() {
         val original = FakeInputs(mapOf("a" to 1))
@@ -60,7 +58,6 @@ class InputsUpdateableTest {
 }
 
 class MetadataTest {
-
     @Test
     fun toMapReflectsUnderlyingData() {
         val meta = FakeInputs(mapOf("x" to 1, "y" to "two"))

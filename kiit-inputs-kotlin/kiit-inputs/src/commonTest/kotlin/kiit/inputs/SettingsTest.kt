@@ -5,7 +5,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class SettingsTest {
-
     @Test
     fun putThenGetRoundTrips() {
         val settings = FakeSettings()

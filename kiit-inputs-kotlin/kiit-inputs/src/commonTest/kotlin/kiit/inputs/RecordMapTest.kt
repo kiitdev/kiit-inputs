@@ -13,27 +13,27 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 class RecordMapTest {
-
     private val uuid = Uuid.random()
     private val instant = Instant.parse("2024-03-05T10:15:30Z")
     private val date = LocalDate.parse("2024-03-05")
     private val time = LocalTime.parse("10:15:30")
     private val dateTime = LocalDateTime.parse("2024-03-05T10:15:30")
 
-    private val record = RecordMap(
-        ListMap(
-            listOf(
-                "id" to 1,
-                "name" to "kiit",
-                "active" to true,
-                "uuid" to uuid,
-                "created" to instant,
-                "date" to date,
-                "time" to time,
-                "datetime" to dateTime,
-            )
+    private val record =
+        RecordMap(
+            ListMap(
+                listOf(
+                    "id" to 1,
+                    "name" to "kiit",
+                    "active" to true,
+                    "uuid" to uuid,
+                    "created" to instant,
+                    "date" to date,
+                    "time" to time,
+                    "datetime" to dateTime,
+                ),
+            ),
         )
-    )
 
     @Test
     fun readsByNamePlainCast() {

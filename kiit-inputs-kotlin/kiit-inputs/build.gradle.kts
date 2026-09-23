@@ -10,8 +10,8 @@ plugins {
     id("signing")
 }
 
-// Single source of truth for the published version — mirrors every other kiit module. Left as a
-// placeholder: the starting version and first publish target (GitHub Packages pre-release vs.
+// Single source of truth for the published version, mirroring every other kiit module. Left as
+// a placeholder: the starting version and first publish target (GitHub Packages pre-release vs.
 // Maven Central stable) are the module owner's call, not something to lock in during scaffolding.
 val libraryVersion = "0.0.0"
 
@@ -51,8 +51,8 @@ kotlin {
     }
 }
 
-// Disabled: SKIE's default analytics upload sends git/hardware/project data to Touchlab — off
-// until that's something explicitly wanted, not because it's a default worth silently keeping.
+// Disabled: SKIE's default analytics upload sends git/hardware/project data to Touchlab. Turn
+// on only when that's something explicitly wanted, not because it's a default worth keeping.
 skie {
     analytics {
         enabled.set(false)
@@ -91,7 +91,8 @@ mavenPublishing {
     )
     pom {
         name = "kiit-inputs"
-        description = "Read/write abstraction for typed key-value data - request inputs, config, DB records, settings - Kotlin Multiplatform, protocol-neutral."
+        description = "Read/write abstraction for typed key-value data - request inputs, config, DB " +
+            "records, settings - Kotlin Multiplatform, protocol-neutral."
         url = "https://kiit.dev"
         licenses {
             license {
@@ -128,8 +129,8 @@ signing {
     sign(publishing.publications)
 }
 
-// The jvm() target compiles to JVM 21 bytecode (see the jvm{} block above) — run jvmTest on a
-// matching JVM, same as every other kiit KMP module.
+// The jvm() target compiles to JVM 21 bytecode (see the jvm{} block above), so jvmTest needs to
+// run on a matching JVM, same as every other kiit KMP module.
 tasks.named<Test>("jvmTest") {
     javaLauncher.set(
         javaToolchains.launcherFor {

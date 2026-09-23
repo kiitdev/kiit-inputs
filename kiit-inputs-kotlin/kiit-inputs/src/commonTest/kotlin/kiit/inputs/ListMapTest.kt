@@ -7,7 +7,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ListMapTest {
-
     @Test
     fun getByKeyAndByPosition() {
         val m = ListMap(listOf("a" to 1, "b" to 2, "c" to 3))

@@ -15,7 +15,11 @@ style:
   ForbiddenComment:
     active: false        # TODOs in KDoc are used as design notes, not untracked work
 
-# TODO: module-specific rule overrides go here (e.g. kiit-rpc disables MagicNumber because HTTP
-# status codes are named constants, and raises TooManyFunctions' threshold for one cohesive
-# Ktor-backed client class). Don't copy those overrides blindly — only add one once this module
-# actually hits the same shape of false positive.
+complexity:
+  TooManyFunctions:
+    # Gets/Puts are deliberately wide, flat typed-accessor interfaces (getString/getBool/getInt,
+    # plus getOrNull/getOrElse variants of each). That breadth is the module's whole point, not
+    # a smell to split up. Gets has 38 members, Puts 24, Record 15; RecordMap/MapReads/ListMap
+    # (concrete implementations covering all of Gets/Puts/Record) are correspondingly wide too.
+    thresholdInInterfaces: 40
+    thresholdInClasses: 20

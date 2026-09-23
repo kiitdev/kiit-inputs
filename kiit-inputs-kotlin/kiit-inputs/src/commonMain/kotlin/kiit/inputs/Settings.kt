@@ -4,7 +4,6 @@ package kiit.inputs
  * Provides both gets (reads) and puts (writes) on configurable settings.
  */
 interface Settings : Inputs, Puts {
-
     /**
      * Convenience method to bracket a batch of edits with init()/done().
      */
