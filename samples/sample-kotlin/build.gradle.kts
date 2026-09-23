@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.serialization)
     application
 }
 
@@ -13,9 +12,7 @@ application {
 }
 
 dependencies {
+    // kiit-inputs has no serialization surface and no suspend functions, so this sample needs
+    // nothing beyond the module itself.
     implementation(project(":kiit-inputs"))
-    implementation(libs.kotlinx.serialization.json)
-    // Needed for runBlocking if the sample calls a suspend function — this module itself doesn't
-    // need this on a consumer's classpath, but a real main() calling into it might.
-    implementation(libs.kotlinx.coroutines.core)
 }
