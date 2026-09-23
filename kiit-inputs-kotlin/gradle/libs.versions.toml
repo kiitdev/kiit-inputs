@@ -11,17 +11,16 @@ kover                   = "0.9.1"
 skie                    = "0.10.14"
 kotlinxSerialization    = "1.9.0"
 kotlinxCoroutines       = "1.10.1"
+# kotlinx-datetime: verify this is still the latest stable release compatible with kotlin=2.3.21
+# before publishing.
+kotlinxDatetime         = "0.6.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
-
-# TODO: add this module's own dependencies here (e.g. ktor-client-*, other engine/transport
-# libraries) — kept out of this base template since they vary module to module. See
-# kiit-httprpc/kiit-rpc-kotlin/gradle/libs.versions.toml for an example (Ktor client + per-target
-# engine artifacts).
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 
 [plugins]
 kotlin-jvm              = { id = "org.jetbrains.kotlin.jvm",         version.ref = "kotlin" }

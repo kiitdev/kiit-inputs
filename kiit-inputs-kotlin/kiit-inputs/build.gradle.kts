@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.vanniktech.mavenPublish)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.detekt)
@@ -41,11 +40,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            // TODO: this module's actual dependencies. If depending on another kiit module
-            // (kiit-codes, kiit-result, ...), use `api(...)` with hardcoded coordinates rather
-            // than a version-catalog entry — those are external kiit libraries, not part of this
-            // repo's own catalog. Use `api`, not `implementation`, only if this module's own
-            // public API directly exposes that dependency's types.
+            // api, not implementation: Gets/Puts/Record expose kotlinx-datetime types
+            // (Instant/LocalDate/LocalTime/LocalDateTime) directly in their public signatures,
+            // so consumers need this on their own compile classpath too.
+            api(libs.kotlinx.datetime)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
