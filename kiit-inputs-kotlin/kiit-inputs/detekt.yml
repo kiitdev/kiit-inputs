@@ -1,0 +1,25 @@
+build:
+  maxIssues: 0
+
+config:
+  validation: true
+  warningsAsErrors: false
+
+style:
+  MaxLineLength:
+    maxLineLength: 120
+  WildcardImport:
+    active: true
+  ReturnCount:
+    max: 6               # guard-clause early returns are idiomatic; default of 2 is too strict
+  ForbiddenComment:
+    active: false        # TODOs in KDoc are used as design notes, not untracked work
+
+complexity:
+  TooManyFunctions:
+    # Gets/Puts are deliberately wide, flat typed-accessor interfaces (getString/getBool/getInt,
+    # plus getOrNull/getOrElse variants of each). That breadth is the module's whole point, not
+    # a smell to split up. Gets has 38 members, Puts 24, Record 15; RecordMap/MapReads/ListMap
+    # (concrete implementations covering all of Gets/Puts/Record) are correspondingly wide too.
+    thresholdInInterfaces: 40
+    thresholdInClasses: 20
