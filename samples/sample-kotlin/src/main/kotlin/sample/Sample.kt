@@ -43,8 +43,8 @@ fun recordMapExample() {
 }
 
 /**
- * A minimal custom Inputs implementation — shows what a host (an HTTP framework adapter, a
- * CLI parser, ...) needs to provide to plug into kiit-inputs. Values are stored pre-typed
+ * A minimal custom Inputs implementation. Shows what a host (an HTTP framework adapter, a
+ * CLI parser, etc.) needs to provide to plug into kiit-inputs. Values are stored pre-typed
  * here for simplicity; a real host reading raw strings would parse them in these getters.
  */
 @OptIn(ExperimentalUuidApi::class)
