@@ -57,7 +57,7 @@ class InputsUpdateableTest {
     }
 }
 
-class MetadataTest {
+class MetaTest {
     @Test
     fun toMapReflectsUnderlyingData() {
         val meta = FakeInputs(mapOf("x" to 1, "y" to "two"))
