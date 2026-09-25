@@ -24,6 +24,8 @@ class FakeInputs(private val data: Map<String, Any?> = mapOf()) : Inputs, Inputs
 
     override fun size(): Int = data.size
 
+    override fun keys(): List<String> = data.keys.toList()
+
     override fun toMap(): Map<String, Any> = data.filterValues { it != null }.mapValues { it.value as Any }
 
     // Backed by a plain, single-value-per-key Map, so every key has at most one occurrence.
@@ -75,6 +77,8 @@ class FakeSettings(private val data: MutableMap<String, Any?> = mutableMapOf()) 
     override fun containsKey(key: String): Boolean = data.containsKey(key)
 
     override fun size(): Int = data.size
+
+    override fun keys(): List<String> = data.keys.toList()
 
     override fun init() {
         initCalled = true

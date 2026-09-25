@@ -42,4 +42,10 @@ class MetaMapTest {
         assertEquals(true, meta.containsKey("a"))
         assertEquals(false, meta.containsKey("z"))
     }
+
+    @Test
+    fun keysAreDeduplicatedForARepeatedKey() {
+        val meta = MetaMap(ListMap(listOf("Set-Cookie" to "a=1", "Set-Cookie" to "b=2", "Content-Type" to "text/plain")))
+        assertEquals(listOf("Set-Cookie", "Content-Type"), meta.keys())
+    }
 }

@@ -25,6 +25,8 @@ class MetaMap(private val rs: ListMap<String, String>) : Meta {
 
     override fun containsKey(key: String): Boolean = rs.contains(key)
 
+    override fun keys(): List<String> = rs.keys().distinct()
+
     override fun getAll(key: String): List<String> = rs.getAll(key)
 
     override fun toMap(): Map<String, Any> = rs.keys().distinct().associateWith { key -> rs.get(key) as Any }

@@ -31,6 +31,12 @@ class InputsTest {
         assertEquals(1, inputs.get("a"))
         assertNull(inputs.get("z"))
     }
+
+    @Test
+    fun keysListsEveryKeyPresent() {
+        val inputs = FakeInputs(mapOf("a" to 1, "b" to 2))
+        assertEquals(listOf("a", "b"), inputs.keys())
+    }
 }
 
 class InputsUpdateableTest {

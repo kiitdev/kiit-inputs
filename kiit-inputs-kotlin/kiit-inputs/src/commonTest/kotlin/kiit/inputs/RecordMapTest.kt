@@ -72,4 +72,9 @@ class RecordMapTest {
     fun sizeReflectsColumnCount() {
         assertEquals(8, record.size())
     }
+
+    @Test
+    fun keysReflectsColumnNamesInOrder() {
+        assertEquals(listOf("id", "name", "active", "uuid", "created", "date", "time", "datetime"), record.keys())
+    }
 }
