@@ -67,6 +67,18 @@ row.getInt("id")   // by name
 row.getInt(0)      // by position, same column
 ```
 
+**Read header-like metadata, including a key that repeats**, the shape HTTP headers or CLI flags need:
+
+```kotlin
+import kiit.inputs.ListMap
+import kiit.inputs.MetaMap
+
+val headers = MetaMap(ListMap(listOf("Set-Cookie" to "a=1", "Set-Cookie" to "b=2", "Content-Type" to "text/plain")))
+headers.getString("Set-Cookie")   // "b=2" — last value wins, same as get()
+headers.getAll("Set-Cookie")      // ["a=1", "b=2"] — every value
+headers.keys()                    // ["Set-Cookie", "Content-Type"] — every key, deduplicated
+```
+
 See [`samples/sample-kotlin`](./samples/sample-kotlin) for a runnable end-to-end example, including a
 minimal custom `Inputs` implementation.
 
@@ -75,15 +87,17 @@ minimal custom `Inputs` implementation.
 | Term | What it is |
 |---|---|
 | **`Gets`** | Typed read access by key: string, bool, numeric, date, UUID, each with an `OrNull`/`OrElse` variant. |
-| **`Inputs`** | `Gets` plus `get`/`containsKey`/`size`/`raw`, the general-purpose read contract for a key-value source. |
+| **`Inputs`** | `Gets` plus `get`/`containsKey`/`size`/`keys`/`raw`, the general-purpose read contract for a key-value source. `keys()` lists every key present, so any `Inputs` can be enumerated, not just read one key at a time. |
 | **`InputsUpdateable`** | An immutable `add(key, value)`, returning a new `Inputs` rather than mutating in place. |
-| **`Metadata`** | An `Inputs` that can also flatten itself to a `Map<String, Any>`. |
+| **`Repeatable`** | `getAll(key): List<String>`, every value for a key that can legitimately repeat (an HTTP header like `Set-Cookie`), not just the last one `get`/`getString` resolve to. |
+| **`Meta`** | `Inputs` + `Repeatable`, plus `toMap()`. For header-like metadata: HTTP headers, CLI flags, queue attributes. |
 | **`Puts`** | Typed write access, mirroring `Gets`. Secondary to reading. |
 | **`Settings`** | `Inputs` + `Puts`, plus `edit { }` for bracketing a batch of writes. |
 | **`Record`** | An `Inputs` addressable by position as well as by name, for row-shaped data. |
 | **`RecordMap`** | A concrete `Record` backed by a `ListMap`. Every getter is a plain cast; converting a source-specific value (a JDBC timestamp, say) into the right type happens wherever the `ListMap` gets built, not inside `RecordMap`. |
+| **`MetaMap`** | A concrete `Meta` backed by a `ListMap<String, String>`. Typed getters parse the raw string (unlike `RecordMap`'s plain cast), since header/flag values are always strings on the wire. `getAll(key)`/`get(key)` read every value or just the last one, respectively. |
 | **`MapReads`** | A concrete `Gets` backed by a plain `Map<String, Any?>`. Good for tests and quick prototyping. |
-| **`ListMap`** | An ordered, immutable collection with O(1) lookup by both key and position, the backing store `RecordMap` needs. |
+| **`ListMap`** | An ordered, immutable collection with O(1) lookup by both key and position, tolerating duplicate keys in storage. The backing store `RecordMap`/`MetaMap` need; its own `getAll(key)` is what `MetaMap.getAll` delegates to. |
 
 Dates and UUIDs are `kotlinx.datetime.Instant`/`LocalDate`/`LocalTime`/`LocalDateTime` and `kotlin.uuid.Uuid`, not `java.time`/`java.util.UUID`, so the whole module compiles and runs on JVM, Android, and iOS without any platform-specific branches.
 
