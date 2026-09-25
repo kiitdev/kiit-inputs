@@ -66,8 +66,14 @@ class InputsUpdateableTest {
 class MetaTest {
     @Test
     fun toMapReflectsUnderlyingData() {
-        val meta = FakeInputs(mapOf("x" to 1, "y" to "two"))
-        assertEquals(mapOf("x" to 1, "y" to "two"), meta.toMap())
+        val meta = FakeInputs(mapOf("x" to "1", "y" to "two"))
+        assertEquals(mapOf("x" to "1", "y" to "two"), meta.toMap())
+    }
+
+    @Test
+    fun toMapStringifiesNonStringValues() {
+        val meta = FakeInputs(mapOf("count" to 3))
+        assertEquals(mapOf("count" to "3"), meta.toMap())
     }
 
     @Test
