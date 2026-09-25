@@ -6,5 +6,5 @@ package kiit.inputs
  * (every value for keys that legitimately repeat, e.g. `Set-Cookie`).
  */
 interface Meta : Inputs, Repeatable {
-    fun toMap(): Map<String, Any>
+    fun toMap(): Map<String, String>
 }

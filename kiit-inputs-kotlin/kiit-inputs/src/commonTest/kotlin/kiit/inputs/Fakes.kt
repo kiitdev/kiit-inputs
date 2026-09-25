@@ -26,7 +26,7 @@ class FakeInputs(private val data: Map<String, Any?> = mapOf()) : Inputs, Inputs
 
     override fun keys(): List<String> = data.keys.toList()
 
-    override fun toMap(): Map<String, Any> = data.filterValues { it != null }.mapValues { it.value as Any }
+    override fun toMap(): Map<String, String> = data.filterValues { it != null }.mapValues { it.value.toString() }
 
     // Backed by a plain, single-value-per-key Map, so every key has at most one occurrence.
     override fun getAll(key: String): List<String> = data[key]?.let { listOf(it.toString()) } ?: emptyList()

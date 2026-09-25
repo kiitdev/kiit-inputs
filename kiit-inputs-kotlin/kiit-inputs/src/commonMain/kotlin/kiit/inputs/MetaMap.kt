@@ -29,7 +29,7 @@ class MetaMap(private val rs: ListMap<String, String>) : Meta {
 
     override fun getAll(key: String): List<String> = rs.getAll(key)
 
-    override fun toMap(): Map<String, Any> = rs.keys().distinct().associateWith { key -> rs.get(key) as Any }
+    override fun toMap(): Map<String, String> = rs.keys().distinct().associateWith { key -> rs.get(key) as String }
 
     override fun getString(key: String): String = getStringRaw(key)
 

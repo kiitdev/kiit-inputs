@@ -87,15 +87,15 @@ minimal custom `Inputs` implementation.
 | Term | What it is |
 |---|---|
 | **`Gets`** | Typed read access by key: string, bool, numeric, date, UUID, each with an `OrNull`/`OrElse` variant. |
+| **`Puts`** | Typed write access, mirroring `Gets`. Secondary to reading. |
 | **`Inputs`** | `Gets` plus `get`/`containsKey`/`size`/`keys`/`raw`, the general-purpose read contract for a key-value source. `keys()` lists every key present, so any `Inputs` can be enumerated, not just read one key at a time. |
 | **`InputsUpdateable`** | An immutable `add(key, value)`, returning a new `Inputs` rather than mutating in place. |
 | **`Repeatable`** | `getAll(key): List<String>`, every value for a key that can legitimately repeat (an HTTP header like `Set-Cookie`), not just the last one `get`/`getString` resolve to. |
 | **`Meta`** | `Inputs` + `Repeatable`, plus `toMap()`. For header-like metadata: HTTP headers, CLI flags, queue attributes. |
-| **`Puts`** | Typed write access, mirroring `Gets`. Secondary to reading. |
+| **`MetaMap`** | A concrete `Meta` backed by a `ListMap<String, String>`. Typed getters parse the raw string (unlike `RecordMap`'s plain cast), since header/flag values are always strings on the wire. `getAll(key)`/`get(key)` read every value or just the last one, respectively. |
 | **`Settings`** | `Inputs` + `Puts`, plus `edit { }` for bracketing a batch of writes. |
 | **`Record`** | An `Inputs` addressable by position as well as by name, for row-shaped data. |
 | **`RecordMap`** | A concrete `Record` backed by a `ListMap`. Every getter is a plain cast; converting a source-specific value (a JDBC timestamp, say) into the right type happens wherever the `ListMap` gets built, not inside `RecordMap`. |
-| **`MetaMap`** | A concrete `Meta` backed by a `ListMap<String, String>`. Typed getters parse the raw string (unlike `RecordMap`'s plain cast), since header/flag values are always strings on the wire. `getAll(key)`/`get(key)` read every value or just the last one, respectively. |
 | **`MapReads`** | A concrete `Gets` backed by a plain `Map<String, Any?>`. Good for tests and quick prototyping. |
 | **`ListMap`** | An ordered, immutable collection with O(1) lookup by both key and position, tolerating duplicate keys in storage. The backing store `RecordMap`/`MetaMap` need; its own `getAll(key)` is what `MetaMap.getAll` delegates to. |
 
