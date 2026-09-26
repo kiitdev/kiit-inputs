@@ -10,12 +10,12 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 /**
- * Minimal test-only [Inputs]/[InputsUpdateable]/[Meta] implementation, backed by a plain
+ * Minimal test-only [Inputs]/[InputsUpdatable]/[Meta] implementation, backed by a plain
  * map of already-typed values (same "plain cast" contract as [RecordMap]). kiit-inputs ships
  * no general-purpose concrete Inputs implementation itself. That's `InputArgs`, which lives in
  * kiit-requests, so these fakes exist purely to exercise the interfaces' default methods.
  */
-class FakeInputs(private val data: Map<String, Any?> = mapOf()) : Inputs, InputsUpdateable, Meta {
+class FakeInputs(private val data: Map<String, Any?> = mapOf()) : Inputs, InputsUpdatable, Meta {
     override val raw: Any = data
 
     override fun get(key: String): Any? = data[key]

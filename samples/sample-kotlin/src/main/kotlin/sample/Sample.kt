@@ -2,10 +2,10 @@ package sample
 
 import kiit.inputs.Gets
 import kiit.inputs.Inputs
-import kiit.inputs.InputsUpdateable
+import kiit.inputs.InputsUpdatable
 import kiit.inputs.ListMap
 import kiit.inputs.MapReads
-import kiit.inputs.Metadata
+import kiit.inputs.Meta
 import kiit.inputs.RecordMap
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -48,12 +48,14 @@ fun recordMapExample() {
  * here for simplicity; a real host reading raw strings would parse them in these getters.
  */
 @OptIn(ExperimentalUuidApi::class)
-private class SimpleInputs(private val data: Map<String, Any?>) : Inputs, InputsUpdateable, Metadata {
+private class SimpleInputs(private val data: Map<String, Any?>) : Inputs, InputsUpdatable, Meta {
     override val raw: Any = data
     override fun get(key: String): Any? = data[key]
     override fun containsKey(key: String): Boolean = data.containsKey(key)
     override fun size(): Int = data.size
-    override fun toMap(): Map<String, Any> = data.filterValues { it != null }.mapValues { it.value as Any }
+    override fun keys(): List<String> = data.keys.toList()
+    override fun toMap(): Map<String, String> = data.filterValues { it != null }.mapValues { it.value.toString() }
+    override fun getAll(key: String): List<String> = data[key]?.let { listOf(it.toString()) } ?: emptyList()
     override fun add(key: String, value: Any): Inputs = SimpleInputs(data + (key to value))
 
     override fun getString(key: String): String = data[key] as String
@@ -72,11 +74,11 @@ private class SimpleInputs(private val data: Map<String, Any?>) : Inputs, Inputs
 
 fun customInputsExample() {
     val original: Gets = SimpleInputs(mapOf("env" to "prod"))
-    val updated = (original as InputsUpdateable).add("region", "us-east-1")
+    val updated = (original as InputsUpdatable).add("region", "us-east-1")
 
     println("original has region? ${(original as Inputs).containsKey("region")}")
     println("updated has region? ${updated.containsKey("region")}")
-    println("updated as map: ${(updated as Metadata).toMap()}")
+    println("updated as map: ${(updated as Meta).toMap()}")
 }
 
 fun main() {

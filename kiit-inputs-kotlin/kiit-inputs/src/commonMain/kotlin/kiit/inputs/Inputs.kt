@@ -1,6 +1,6 @@
 package kiit.inputs
 
-interface InputsUpdateable {
+interface InputsUpdatable {
     // Immutable add. Returns a new Inputs, does not mutate the receiver.
     fun add(key: String, value: Any): Inputs
 }

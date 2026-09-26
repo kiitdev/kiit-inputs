@@ -39,7 +39,7 @@ class InputsTest {
     }
 }
 
-class InputsUpdateableTest {
+class InputsUpdatableTest {
     @Test
     fun addReturnsNewInstanceWithoutMutatingOriginal() {
         val original = FakeInputs(mapOf("a" to 1))

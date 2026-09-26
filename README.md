@@ -89,7 +89,7 @@ minimal custom `Inputs` implementation.
 | **`Gets`** | Typed read access by key: string, bool, numeric, date, UUID, each with an `OrNull`/`OrElse` variant. |
 | **`Puts`** | Typed write access, mirroring `Gets`. Secondary to reading. |
 | **`Inputs`** | `Gets` plus `get`/`containsKey`/`size`/`keys`/`raw`, the general-purpose read contract for a key-value source. `keys()` lists every key present, so any `Inputs` can be enumerated, not just read one key at a time. |
-| **`InputsUpdateable`** | An immutable `add(key, value)`, returning a new `Inputs` rather than mutating in place. |
+| **`InputsUpdatable`** | An immutable `add(key, value)`, returning a new `Inputs` rather than mutating in place. |
 | **`Repeatable`** | `getAll(key): List<String>`, every value for a key that can legitimately repeat (an HTTP header like `Set-Cookie`), not just the last one `get`/`getString` resolve to. |
 | **`Meta`** | `Inputs` + `Repeatable`, plus `toMap()`. For header-like metadata: HTTP headers, CLI flags, queue attributes. |
 | **`MetaMap`** | A concrete `Meta` backed by a `ListMap<String, String>`. Typed getters parse the raw string (unlike `RecordMap`'s plain cast), since header/flag values are always strings on the wire. `getAll(key)`/`get(key)` read every value or just the last one, respectively. |
