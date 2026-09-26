@@ -92,12 +92,13 @@ minimal custom `Inputs` implementation.
 | **`InputsUpdatable`** | An immutable `add(key, value)`, returning a new `Inputs` rather than mutating in place. |
 | **`Repeatable`** | `getAll(key): List<String>`, every value for a key that can legitimately repeat (an HTTP header like `Set-Cookie`), not just the last one `get`/`getString` resolve to. |
 | **`Meta`** | `Inputs` + `Repeatable`, plus `toMap()`. For header-like metadata: HTTP headers, CLI flags, queue attributes. |
-| **`MetaMap`** | A concrete `Meta` backed by a `ListMap<String, String>`. Typed getters parse the raw string (unlike `RecordMap`'s plain cast), since header/flag values are always strings on the wire. `getAll(key)`/`get(key)` read every value or just the last one, respectively. |
+| **`Args`** | Same shape as `Meta` (`Inputs` + `Repeatable` + `toMap()`), for query/call arguments instead. Kept as its own type rather than a typealias, so the two aren't interchangeable by accident. |
+| **`MetaMap`** / **`ArgsMap`** | Concrete `Meta`/`Args` implementations, both backed by `ListMapReads` (a `ListMap<String, String>`-backed `Inputs`/`Repeatable` implementation shared between the two, so neither duplicates the other's parsing logic). Typed getters parse the raw string (unlike `RecordMap`'s plain cast), since header/flag/query values are always strings on the wire. `getAll(key)`/`get(key)` read every value or just the last one, respectively. |
 | **`Settings`** | `Inputs` + `Puts`, plus `edit { }` for bracketing a batch of writes. |
 | **`Record`** | An `Inputs` addressable by position as well as by name, for row-shaped data. |
 | **`RecordMap`** | A concrete `Record` backed by a `ListMap`. Every getter is a plain cast; converting a source-specific value (a JDBC timestamp, say) into the right type happens wherever the `ListMap` gets built, not inside `RecordMap`. |
 | **`MapReads`** | A concrete `Gets` backed by a plain `Map<String, Any?>`. Good for tests and quick prototyping. |
-| **`ListMap`** | An ordered, immutable collection with O(1) lookup by both key and position, tolerating duplicate keys in storage. The backing store `RecordMap`/`MetaMap` need; its own `getAll(key)` is what `MetaMap.getAll` delegates to. |
+| **`ListMap`** | An ordered, immutable collection with O(1) lookup by both key and position, tolerating duplicate keys in storage. The backing store `RecordMap`/`ListMapReads` need. |
 
 Dates and UUIDs are `kotlinx.datetime.Instant`/`LocalDate`/`LocalTime`/`LocalDateTime` and `kotlin.uuid.Uuid`, not `java.time`/`java.util.UUID`, so the whole module compiles and runs on JVM, Android, and iOS without any platform-specific branches.
 
