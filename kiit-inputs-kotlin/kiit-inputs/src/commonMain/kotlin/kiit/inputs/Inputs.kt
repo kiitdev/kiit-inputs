@@ -20,6 +20,9 @@ interface Inputs : Gets {
 
     fun size(): Int
 
+    /** Every key present, in whatever order the backing source holds them. */
+    fun keys(): List<String>
+
     override fun <T> getOrNull(key: String, fetcher: (String) -> T): T? {
         return if (containsKey(key)) {
             val v = get(key)

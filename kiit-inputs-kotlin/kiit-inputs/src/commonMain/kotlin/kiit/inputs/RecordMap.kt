@@ -32,6 +32,8 @@ class RecordMap(private val rs: ListMap<String, Any?>) : Record {
 
     override fun containsKey(key: String): Boolean = rs.contains(key)
 
+    override fun keys(): List<String> = rs.keys().distinct()
+
     override fun getString(key: String): String = rs.get(key) as String
 
     override fun getBool(key: String): Boolean = rs.get(key) as Boolean

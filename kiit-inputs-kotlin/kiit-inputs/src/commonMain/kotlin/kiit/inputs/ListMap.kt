@@ -29,6 +29,14 @@ open class ListMap<A, B>(protected val list: List<Pair<A, B>> = listOf()) {
      */
     fun getAt(pos: Int): B? = list[pos].second
 
+    /**
+     * Every value stored under `key`, in insertion order. Unlike [get] (last-write-wins),
+     * this surfaces every occurrence, the same way [entries] does across all keys. This is
+     * what backs multi-value keys (HTTP `Set-Cookie`, repeated query params) once a caller
+     * needs more than the collapsed single-value view.
+     */
+    fun getAll(key: A): List<B> = list.filter { it.first == key }.map { it.second }
+
     operator fun plus(item: Pair<A, B>): ListMap<A, B> = add(item)
 
     operator fun minus(key: A): ListMap<A, B> = remove(key)

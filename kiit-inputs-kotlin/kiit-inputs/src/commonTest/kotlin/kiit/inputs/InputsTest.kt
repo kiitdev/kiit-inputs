@@ -31,6 +31,12 @@ class InputsTest {
         assertEquals(1, inputs.get("a"))
         assertNull(inputs.get("z"))
     }
+
+    @Test
+    fun keysListsEveryKeyPresent() {
+        val inputs = FakeInputs(mapOf("a" to 1, "b" to 2))
+        assertEquals(listOf("a", "b"), inputs.keys())
+    }
 }
 
 class InputsUpdateableTest {
@@ -57,11 +63,17 @@ class InputsUpdateableTest {
     }
 }
 
-class MetadataTest {
+class MetaTest {
     @Test
     fun toMapReflectsUnderlyingData() {
-        val meta = FakeInputs(mapOf("x" to 1, "y" to "two"))
-        assertEquals(mapOf("x" to 1, "y" to "two"), meta.toMap())
+        val meta = FakeInputs(mapOf("x" to "1", "y" to "two"))
+        assertEquals(mapOf("x" to "1", "y" to "two"), meta.toMap())
+    }
+
+    @Test
+    fun toMapStringifiesNonStringValues() {
+        val meta = FakeInputs(mapOf("count" to 3))
+        assertEquals(mapOf("count" to "3"), meta.toMap())
     }
 
     @Test

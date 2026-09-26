@@ -10,12 +10,12 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 /**
- * Minimal test-only [Inputs]/[InputsUpdateable]/[Metadata] implementation, backed by a plain
+ * Minimal test-only [Inputs]/[InputsUpdateable]/[Meta] implementation, backed by a plain
  * map of already-typed values (same "plain cast" contract as [RecordMap]). kiit-inputs ships
  * no general-purpose concrete Inputs implementation itself. That's `InputArgs`, which lives in
  * kiit-requests, so these fakes exist purely to exercise the interfaces' default methods.
  */
-class FakeInputs(private val data: Map<String, Any?> = mapOf()) : Inputs, InputsUpdateable, Metadata {
+class FakeInputs(private val data: Map<String, Any?> = mapOf()) : Inputs, InputsUpdateable, Meta {
     override val raw: Any = data
 
     override fun get(key: String): Any? = data[key]
@@ -24,7 +24,12 @@ class FakeInputs(private val data: Map<String, Any?> = mapOf()) : Inputs, Inputs
 
     override fun size(): Int = data.size
 
-    override fun toMap(): Map<String, Any> = data.filterValues { it != null }.mapValues { it.value as Any }
+    override fun keys(): List<String> = data.keys.toList()
+
+    override fun toMap(): Map<String, String> = data.filterValues { it != null }.mapValues { it.value.toString() }
+
+    // Backed by a plain, single-value-per-key Map, so every key has at most one occurrence.
+    override fun getAll(key: String): List<String> = data[key]?.let { listOf(it.toString()) } ?: emptyList()
 
     override fun add(key: String, value: Any): Inputs = FakeInputs(data + (key to value))
 
@@ -72,6 +77,8 @@ class FakeSettings(private val data: MutableMap<String, Any?> = mutableMapOf()) 
     override fun containsKey(key: String): Boolean = data.containsKey(key)
 
     override fun size(): Int = data.size
+
+    override fun keys(): List<String> = data.keys.toList()
 
     override fun init() {
         initCalled = true

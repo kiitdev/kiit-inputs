@@ -56,6 +56,14 @@ class ListMapTest {
     }
 
     @Test
+    fun getAllReturnsEveryValueForADuplicateKey() {
+        val m = ListMap(listOf("Set-Cookie" to "a=1", "Set-Cookie" to "b=2", "Content-Type" to "text/plain"))
+        assertEquals(listOf("a=1", "b=2"), m.getAll("Set-Cookie"))
+        assertEquals(listOf("text/plain"), m.getAll("Content-Type"))
+        assertEquals(emptyList(), m.getAll("missing"))
+    }
+
+    @Test
     fun keysValuesEntriesAndAll() {
         val m = ListMap(listOf("a" to 1, "b" to 2))
         assertEquals(listOf("a", "b"), m.keys())
