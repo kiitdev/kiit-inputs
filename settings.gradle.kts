@@ -19,12 +19,9 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "kiit-inputs-kotlin"
+rootProject.name = "kiit-inputs"
 
 include(":kiit-inputs")
-include(":sample-kotlin")
 
-// sample-kotlin stays in the shared ./samples/ folder alongside sample-java/sample-swift, one
-// level up from this settings file. sample-java/sample-swift start as empty placeholders, not
-// included here until they have real content.
-project(":sample-kotlin").projectDir = file("../samples/sample-kotlin")
+// sample-java and sample-swift are empty placeholders, not included until they have real content.
+include(":samples:sample-kotlin")
