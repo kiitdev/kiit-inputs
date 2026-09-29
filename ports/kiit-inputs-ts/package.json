@@ -1,0 +1,53 @@
+{
+  "name": "@kiitdev/inputs",
+  "version": "0.8.0",
+  "description": "Typed read/write access to key-value data: request inputs, config, DB records, settings",
+  "keywords": [
+    "inputs",
+    "key-value",
+    "config",
+    "settings",
+    "typescript"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://kiit.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kiitdev/kiit-inputs.git",
+    "directory": "ports/kiit-inputs-ts"
+  },
+  "bugs": {
+    "url": "https://github.com/kiitdev/kiit-inputs/issues"
+  },
+  "author": "CodeHelix <https://kiit.dev>",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
+  },
+  "dependencies": {
+    "temporal-polyfill": "^1.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.4",
+    "typescript": "5.9.3",
+    "vitest": "^5.0.0"
+  }
+}
