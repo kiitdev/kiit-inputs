@@ -82,6 +82,8 @@ headers.keys()                    // ["Set-Cookie", "Content-Type"] — every ke
 See [`samples/sample-kotlin`](./samples/sample-kotlin) for a runnable end-to-end example, including a
 minimal custom `Inputs` implementation.
 
+**TypeScript.** A native port lives in [`ports/kiit-inputs-ts`](./ports/kiit-inputs-ts) (`@kiitdev/inputs`), with a sample in [`samples/sample-ts`](./samples/sample-ts).
+
 ## Concepts
 
 | Term | What it is |
@@ -118,6 +120,7 @@ Dates and UUIDs are `kotlinx.datetime.Instant`/`LocalDate`/`LocalTime`/`LocalDat
 - Kotlin Multiplatform
 - JVM, Android, iOS (arm64, simulator arm64, x64)
 - Depends on `kotlinx-datetime` (transitively available to consumers via `api`)
+- TypeScript port: Node 24+, one dependency (`temporal-polyfill`)
 
 ## License
 
