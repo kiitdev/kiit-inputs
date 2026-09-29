@@ -14,12 +14,14 @@ plugins {
     alias(libs.plugins.skie) apply false
 }
 
-// Keeps IntelliJ from indexing the non-Gradle Swift sample. Gradle itself already ignores it,
-// it isn't included in settings.gradle.kts.
+// Keeps IntelliJ from indexing the TypeScript port and the non-Gradle samples (node_modules, dist).
+// Gradle itself already ignores them, they aren't included in settings.gradle.kts.
 idea {
     module {
         excludeDirs.addAll(
             listOf(
+                file("ports"),
+                file("samples/sample-ts"),
                 file("samples/sample-swift"),
             ),
         )
